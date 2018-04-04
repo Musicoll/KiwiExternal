@@ -14,6 +14,11 @@
 #include <cassert>
 #include <dlfcn.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#include <stdio.h>
+#endif
+
 namespace kiwi
 {
     namespace external
@@ -28,10 +33,14 @@ namespace kiwi
                 auto& olib = get().libs[fullpath];
                 if(!olib.lib)
                 {
-                    void* lib_handle = dlopen(fullpath.c_str(), RTLD_LOCAL|RTLD_LAZY);
+#ifdef _WIN32
+                    lib_t lib_handle = LoadLibrary(TEXT(fullpath.c_str()));
+#else
+                    lib_t lib_handle = dlopen(fullpath.c_str(), RTLD_LOCAL|RTLD_LAZY);
+#endif
                     if (!lib_handle)
                     {
-                        throw kerror_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to open library: ") + std::string(dlerror()));
+                        throw kerror_t(std::string("Unable to open library: ") + fullpath);
                     }
                     else
                     {
@@ -40,10 +49,15 @@ namespace kiwi
                 }
                 if(!olib.ctor)
                 {
-                    object_creator* ctor = (object_creator*)dlsym(olib.lib, "createObject");
+#ifdef _WIN32
+                    object_creator* ctor = (object_creator*)GetProcAddress(olib.lib, "create_object");
+#else
+                    object_creator* ctor = (object_creator*)dlsym(olib.lib, "create_object");
+#endif
+                    
                     if(!ctor)
                     {
-                        throw kerror_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to find createObject method: ") + std::string(dlerror()));
+                        throw kerror_t(std::string("Unable to find create_object method from: ") + fullpath);
                     }
                     else
                     {
@@ -52,10 +66,14 @@ namespace kiwi
                 }
                 if(!olib.dspr)
                 {
-                    object_disposer* dspr = (object_disposer*)dlsym(olib.lib, "freeObject");
+#ifdef _WIN32
+                    object_creator* ctor = (object_creator*)GetProcAddress(olib.lib, "free_object");
+#else
+                    object_disposer* dspr = (object_disposer*)dlsym(olib.lib, "free_object");
+#endif
                     if(!dspr)
                     {
-                        throw kerror_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to find freeObject method: ") + std::string(dlerror()));
+                        throw kerror_t(std::string("Unable to find free_object method from: ") + fullpath);
                     }
                     else
                     {
@@ -90,6 +108,7 @@ namespace kiwi
             {
                 for(auto& olib : libs)
                 {
+#ifndef _WIN32
                     if(olib.second.lib)
                     {
                         if (dlclose(olib.second.lib) != 0)
@@ -97,6 +116,7 @@ namespace kiwi
                             
                         }
                     }
+#endif
                     assert(olib.second.objs.empty() && "objects not freed");
                 }
             }
@@ -108,13 +128,19 @@ namespace kiwi
                 return singleton;
             }
             
+#ifdef _WIN32
+            typedef HINSTANCE lib_t;
+#else
+            typedef void* lib_t;
+#endif
             struct object_lib
             {
-                void*          lib = nullptr;
-                object_creator* ctor = nullptr;
-                object_disposer* dspr = nullptr;
-                std::set<Object*> objs;
+                lib_t               lib = nullptr;
+                object_creator*     ctor = nullptr;
+                object_disposer*    dspr = nullptr;
+                std::set<Object*>   objs;
             };
+            
             std::map<std::string, object_lib> libs;
         };
     }

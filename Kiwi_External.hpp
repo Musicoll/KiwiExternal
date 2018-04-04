@@ -102,6 +102,6 @@ extern "C" KIWI_LIBRARY_EXTERN kiwi::external::Object* createObject();
 extern "C" KIWI_LIBRARY_EXTERN void freeObject(kiwi::external::Object* c);
 
 #define declare(CLASSNAME)  \
-extern "C" KIWI_LIBRARY_EXTERN kiwi::external::Object* createObject() { return new CLASSNAME(); } \
-extern "C" KIWI_LIBRARY_EXTERN void freeObject(kiwi::external::Object* c) { delete c; }
+extern "C" KIWI_LIBRARY_EXTERN kiwi::external::Object* create_object() { return new CLASSNAME(); } \
+extern "C" KIWI_LIBRARY_EXTERN void free_object(kiwi::external::Object* c) { delete c; }
 
