@@ -17,7 +17,7 @@ static int load_object(const std::string& path, const std::string& name)
     {
         obj = kiwi::external::Loader::create(path, name);
     }
-    catch (kerror_t& e)
+    catch (kiwi::external::kerror_t& e)
     {
         std::cerr << e.what() << "\n";
         return 1;
@@ -29,7 +29,7 @@ static int load_object(const std::string& path, const std::string& name)
     {
         obj->prepare(44100, 64);
     }
-    catch (kerror_t& e)
+    catch (kiwi::external::kerror_t& e)
     {
         error = true;
         std::cerr << e.what() << "...";
@@ -49,7 +49,7 @@ static int load_object(const std::string& path, const std::string& name)
     {
         kiwi::external::Loader::dispose(obj);
     }
-    catch (kerror_t& e)
+    catch (kiwi::external::kerror_t& e)
     {
         std::cerr << e.what() << "\n";
         return 1;
