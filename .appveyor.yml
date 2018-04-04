@@ -10,7 +10,7 @@ build_script:
     - mkdir build && cd build
     - cmake -DCMAKE_BUILD_TYPE=Debug -G "%COMPILER%" ..
     - cmake --build .
-    - %APPVEYOR_BUILD_FOLDER%\libs\kiwi_loader_test.exe ../libs
+    - %APPVEYOR_BUILD_FOLDER%\libs\kiwi_loader_test.exe
 
 notifications:
 
