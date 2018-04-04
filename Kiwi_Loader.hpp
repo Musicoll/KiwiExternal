@@ -68,7 +68,7 @@ namespace kiwi
                 if(!olib.dspr)
                 {
 #ifdef _WIN32
-                    object_creator* dspr = (object_creator*)GetProcAddress(olib.lib, "free_object");
+                    object_disposer* dspr = (object_disposer*)GetProcAddress(olib.lib, "free_object");
 #else
                     object_disposer* dspr = (object_disposer*)dlsym(olib.lib, "free_object");
 #endif
@@ -109,9 +109,11 @@ namespace kiwi
             {
                 for(auto& olib : libs)
                 {
-#ifndef _WIN32
                     if(olib.second.lib)
                     {
+#ifdef _WIN32
+                        FreeLibrary(olib.second.lib);
+#else
                         if (dlclose(olib.second.lib) != 0)
                         {
                             
