@@ -68,7 +68,7 @@ namespace kiwi
                 if(!olib.dspr)
                 {
 #ifdef _WIN32
-                    object_creator* ctor = (object_creator*)GetProcAddress(olib.lib, "free_object");
+                    object_creator* dspr = (object_creator*)GetProcAddress(olib.lib, "free_object");
 #else
                     object_disposer* dspr = (object_disposer*)dlsym(olib.lib, "free_object");
 #endif
