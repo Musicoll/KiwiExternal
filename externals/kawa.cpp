@@ -38,7 +38,7 @@ private:
     std::uniform_real_distribution<sample_t> m_random_distribution;
 };
 
-declare(Kawa)
+KIWI_LIBRARY_DECLARE(Kawa)
 
 #pragma GCC visibility pop
 

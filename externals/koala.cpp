@@ -42,7 +42,7 @@ private:
     sample_t m_last;
 };
 
-declare(Koala)
+KIWI_LIBRARY_DECLARE(Koala)
 
 #pragma GCC visibility pop
 

@@ -24,7 +24,7 @@ public:
     void perform(buffer_t const& input, buffer_t& output) noexcept final {}
 };
 
-declare(Kirikou)
+KIWI_LIBRARY_DECLARE(Kirikou)
 
 #pragma GCC visibility pop
 
