@@ -25,7 +25,7 @@ function(add_kiwi_external PROJECT_NAME EXTERNAL_NAME EXTERNAL_SOURCES)
 	# Defines plateform specifix suffix and the linking necessities.
 	set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 	set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".kiwix")
-
+	target_compile_definitions(${PROJECT_NAME} PUBLIC KIWI_LIBRARY_EXPORTS=1)
 	# Defines the name of the external.
 	# On XCode with CMake < 3.4 if the name of an external ends with tilde but doesn't have a dot, the name must be 'name~'.
 	# CMake 3.4 is not sure, but it should be between 3.3.2 and 3.6.2
