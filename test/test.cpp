@@ -60,12 +60,10 @@ static int load_object(const std::string& path, const std::string& name)
 
 int main(int argc, const char * argv[])
 {
-    int error = 0;
     std::string const path = argc > 1 ?  argv[1] : (argc ? argv[0] : "");
-
     std::cout << "looking in " << path << ":\n";
-    error += load_object(path, "koala");
-    error += load_object(path, "kawa");
-    error += load_object(path, "kirikou");
-    return error;
+    assert(load_object(path, "koala") == 0);
+    assert(load_object(path, "kawa") == 0);
+    assert(load_object(path, "kirikou") == 0);
+    return 0;
 }

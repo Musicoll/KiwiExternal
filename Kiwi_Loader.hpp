@@ -118,8 +118,9 @@ namespace kiwi
                         {
                             
                         }
-                    }
 #endif
+                    }
+
                     assert(olib.second.objs.empty() && "objects not freed");
                 }
             }
