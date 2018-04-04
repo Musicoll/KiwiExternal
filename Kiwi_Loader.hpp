@@ -12,11 +12,12 @@
 #include <map>
 #include <set>
 #include <cassert>
-#include <dlfcn.h>
 
 #ifdef _WIN32
 #include <windows.h>
 #include <stdio.h>
+#else
+#include <dlfcn.h>
 #endif
 
 namespace kiwi
