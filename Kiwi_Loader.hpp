@@ -16,7 +16,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <stdio.h>
-#define KIWI_PATH_SEPARATOR "\"
+#define KIWI_PATH_SEPARATOR "\\"
 #else
 #include <dlfcn.h>
 #define KIWI_PATH_SEPARATOR "/"
