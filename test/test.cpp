@@ -65,5 +65,7 @@ int main(int argc, const char * argv[])
     assert(load_object(path, "koala") == 0);
     assert(load_object(path, "kawa") == 0);
     assert(load_object(path, "kirikou") == 0);
+    assert(load_object(path, "kroko") != 0);
+    assert(load_object(path, "jimi") != 0);
     return 0;
 }
