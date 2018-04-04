@@ -12,6 +12,7 @@ project(kiwi_externals CXX)
 set_kiwi_external_path("${PROJECT_SOURCE_DIR}/libs/")
 add_kiwi_external(external_kawa kawa ${PROJECT_SOURCE_DIR}/externals/kawa.cpp)
 add_kiwi_external(external_koala koala ${PROJECT_SOURCE_DIR}/externals/koala.cpp)
+add_kiwi_external(external_kirikou kirikou ${PROJECT_SOURCE_DIR}/externals/kirikou.cpp)
 
 set(TEST_SOURCES
 ${PROJECT_SOURCE_DIR}/Kiwi_External.hpp

@@ -31,7 +31,8 @@ static int load_object(const std::string& path, const std::string& name)
     }
     catch (kiwi::external::error_t& e)
     {
-        std::cerr << e.what() << "\n";
+        error = true;
+        std::cerr << e.what() << "...";
     }
     
     if(!error)
@@ -41,6 +42,7 @@ static int load_object(const std::string& path, const std::string& name)
         {
             obj->perform(inputs, outputs);
         }
+        std::cout << "perform...";
     }
     
     try
@@ -64,5 +66,6 @@ int main(int argc, const char * argv[])
     std::cout << "looking in " << path << ":\n";
     error += load_object(path, "koala");
     error += load_object(path, "kawa");
+    error += load_object(path, "kirikou");
     return error;
 }
