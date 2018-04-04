@@ -9,29 +9,27 @@
 #include <iostream>
 #include <Kiwi_Loader.hpp>
 
-using namespace kiwi::external;
-
 static int load_object(const std::string& path, const std::string& name)
 {
     std::cout << "test " << name << "...";
-    Object* obj;
+    kiwi::external::Object* obj;
     try
     {
-        obj = Loader::create(path, name);
+        obj = kiwi::external::Loader::create(path, name);
     }
-    catch (error_t& e)
+    catch (kiwi::external::error_t& e)
     {
         std::cerr << e.what() << "\n";
         return 1;
     }
-    buffer_t inputs{obj->getNumberOfInputs(), {64, 0}};
-    buffer_t outputs{obj->getNumberOfOutputs(), {64, 0}};
+    kiwi::external::buffer_t inputs{obj->getNumberOfInputs(), {64, 0}};
+    kiwi::external::buffer_t outputs{obj->getNumberOfOutputs(), {64, 0}};
     bool error = false;
     try
     {
         obj->prepare(44100, 64);
     }
-    catch (error_t& e)
+    catch (kiwi::external::error_t& e)
     {
         std::cerr << e.what() << "\n";
     }
@@ -47,9 +45,9 @@ static int load_object(const std::string& path, const std::string& name)
     
     try
     {
-        Loader::dispose(obj);
+        kiwi::external::Loader::dispose(obj);
     }
-    catch (error_t& e)
+    catch (kiwi::external::error_t& e)
     {
         std::cerr << e.what() << "\n";
         return 1;
