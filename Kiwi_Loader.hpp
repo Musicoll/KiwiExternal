@@ -16,8 +16,10 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <stdio.h>
+#define KIWI_PATH_SEPARATOR "\"
 #else
 #include <dlfcn.h>
+#define KIWI_PATH_SEPARATOR "/"
 #endif
 
 namespace kiwi
@@ -30,7 +32,7 @@ namespace kiwi
             
             static Object* create(std::string const& path, std::string const& name)
             {
-                const std::string fullpath = path.empty() ? name + ".kiwix" : path + std::string(s_separator) + name + ".kiwix";
+                const std::string fullpath = path.empty() ? name + ".kiwix" : path + KIWI_PATH_SEPARATOR + name + ".kiwix";
                 auto& olib = get().libs[fullpath];
                 if(!olib.lib)
                 {
@@ -134,10 +136,8 @@ namespace kiwi
             
 #ifdef _WIN32
             typedef HINSTANCE lib_t;
-            constexpr static char const* const s_separator = "\";
 #else
             typedef void* lib_t;
-            constexpr static char const* const s_separator = "/";
 #endif
             struct object_lib
             {
@@ -151,6 +151,8 @@ namespace kiwi
         };
     }
 }
+
+#undef KIWI_PATH_SEPARATOR
 
 
 
