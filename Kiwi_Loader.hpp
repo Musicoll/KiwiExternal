@@ -31,7 +31,7 @@ namespace kiwi
                     void* lib_handle = dlopen(fullpath.c_str(), RTLD_LOCAL|RTLD_LAZY);
                     if (!lib_handle)
                     {
-                        throw error_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to open library: ") + std::string(dlerror()));
+                        throw kerror_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to open library: ") + std::string(dlerror()));
                     }
                     else
                     {
@@ -43,7 +43,7 @@ namespace kiwi
                     object_creator* ctor = (object_creator*)dlsym(olib.lib, "createObject");
                     if(!ctor)
                     {
-                        throw error_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to find createObject method: ") + std::string(dlerror()));
+                        throw kerror_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to find createObject method: ") + std::string(dlerror()));
                     }
                     else
                     {
@@ -55,7 +55,7 @@ namespace kiwi
                     object_disposer* dspr = (object_disposer*)dlsym(olib.lib, "freeObject");
                     if(!dspr)
                     {
-                        throw error_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to find freeObject method: ") + std::string(dlerror()));
+                        throw kerror_t(std::string("[") + std::string(__FILE__) + std::string("] main: Unable to find freeObject method: ") + std::string(dlerror()));
                     }
                     else
                     {
@@ -83,7 +83,7 @@ namespace kiwi
                         return;
                     }
                 }
-                throw error_t("can't find the disposer.");
+                throw kerror_t("can't find the disposer.");
             }
             
             ~Loader()

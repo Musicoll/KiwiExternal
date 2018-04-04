@@ -14,6 +14,16 @@
 #include <vector>
 //#include <variant>
 
+#ifdef _WIN32
+#ifdef KIWI_LIBRARY_EXPORTS
+#define KIWI_LIBRARY_EXTERN __declspec(dllexport)
+#else
+#define KIWI_LIBRARY_EXTERN __declspec(dllimport)
+#endif
+#else
+#define KIWI_LIBRARY_EXTERN
+#endif
+
 namespace kiwi
 {
     namespace external
@@ -23,7 +33,7 @@ namespace kiwi
 #else
         typedef double sample_t;
 #endif
-        typedef std::runtime_error error_t;
+        typedef std::runtime_error kerror_t;
         //typedef std::variant<std::string, double> atom_t;
         typedef std::vector<std::vector<sample_t>> buffer_t;
         // ==================================================================================== //
@@ -88,10 +98,10 @@ namespace kiwi
 typedef kiwi::external::Object *object_creator(void);
 typedef void object_disposer(kiwi::external::Object *);
 
-extern "C" kiwi::external::Object* createObject();
-extern "C" void freeObject(kiwi::external::Object* c);
+extern "C" KIWI_LIBRARY_EXTERN kiwi::external::Object* createObject();
+extern "C" KIWI_LIBRARY_EXTERN void freeObject(kiwi::external::Object* c);
 
 #define declare(CLASSNAME)  \
-extern "C" kiwi::external::Object* createObject() { return new CLASSNAME(); } \
-extern "C" void freeObject(kiwi::external::Object* c) { delete c; }
+extern "C" KIWI_LIBRARY_EXTERN kiwi::external::Object* createObject() { return new CLASSNAME(); } \
+extern "C" KIWI_LIBRARY_EXTERN void freeObject(kiwi::external::Object* c) { delete c; }
 

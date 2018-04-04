@@ -19,7 +19,7 @@ class Kirikou : public Object
 public:
     Kirikou() : Object(0, 0) {}
     
-    void prepare(const size_t samplerate, const size_t blocksize) { throw error_t("Graou"); }
+    void prepare(const size_t samplerate, const size_t blocksize) { throw kerror_t("Graou"); }
     
     void perform(buffer_t const& input, buffer_t& output) noexcept final {}
 };
