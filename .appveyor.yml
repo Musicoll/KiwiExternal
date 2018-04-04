@@ -1,18 +1,14 @@
 
 environment:
    matrix:
-      - PLATFORM: x64
-        PTHREAD: x64
-        COMPILER: "Visual Studio 14 2015 Win64"
-      - PLATFORM: Win32
-        PTHREAD: x86
-        COMPILER: "Visual Studio 14 2015"
+      - COMPILER: "Visual Studio 14 2015 Win64"
+      - COMPILER: "Visual Studio 14 2015"
 
 os: Visual Studio 2015
 
 build_script:
     - mkdir build && cd build
-    - cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - cmake -DCMAKE_BUILD_TYPE=Debug -G %COMPILER% ..
     - cmake --build .
     - ../libs/kiwi_loader_test ../libs
 
