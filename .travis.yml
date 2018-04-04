@@ -1,0 +1,21 @@
+language: cpp
+dist: trusty
+sudo: required
+notifications:
+  email: false
+git:
+  submodules: true
+  depth: 3
+
+matrix:
+  include:
+  - os: linux
+    compiler: gcc
+  - os: osx
+    compiler: clang++
+
+script:
+  - mkdir build && cd build
+  - cmake -DCMAKE_BUILD_TYPE=Debug ..
+  - cmake --build .
+  - ../libs/kiwi_loader_test ../libs

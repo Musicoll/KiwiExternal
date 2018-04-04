@@ -11,17 +11,17 @@
 
 using namespace kiwi::external;
 
-static int load_object(const std::string& name)
+static int load_object(const std::string& path, const std::string& name)
 {
     std::cout << "test " << name << "...";
     Object* obj;
     try
     {
-        obj = Loader::create("", name);
+        obj = Loader::create(path, name);
     }
     catch (error_t& e)
     {
-        std::cerr << e.what();
+        std::cerr << e.what() << "\n";
         return 1;
     }
     buffer_t inputs{obj->getNumberOfInputs(), {64, 0}};
@@ -33,7 +33,7 @@ static int load_object(const std::string& name)
     }
     catch (error_t& e)
     {
-        std::cerr << e.what();
+        std::cerr << e.what() << "\n";
     }
     
     if(!error)
@@ -51,7 +51,7 @@ static int load_object(const std::string& name)
     }
     catch (error_t& e)
     {
-        std::cerr << e.what();
+        std::cerr << e.what() << "\n";
         return 1;
     }
     std::cout << "ok\n";
@@ -61,7 +61,10 @@ static int load_object(const std::string& name)
 int main(int argc, const char * argv[])
 {
     int error = 0;
-    error += load_object("koala");
-    error += load_object("kawa");
+    std::string const path = argc > 1 ?  argv[1] : (argc ? argv[0] : "");
+
+    std::cout << "looking in " << path << ":\n";
+    error += load_object(path, "koala");
+    error += load_object(path, "kawa");
     return error;
 }

@@ -24,7 +24,7 @@ namespace kiwi
             
             static Object* create(std::string const& path, std::string const& name)
             {
-                const std::string fullpath = path + "/" + name + ".kiwix";
+                const std::string fullpath = path.empty() ? name + ".kiwix" : path + "/" + name + ".kiwix";
                 auto& olib = get().libs[fullpath];
                 if(!olib.lib)
                 {
